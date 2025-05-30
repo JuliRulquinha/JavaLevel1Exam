@@ -1,9 +1,10 @@
 package com.API_CRUD.JavaLevel1Exam.Category;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.API_CRUD.JavaLevel1Exam.Product.Product;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Category {
@@ -11,6 +12,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+
+    @OneToMany(
+            mappedBy = "category"
+    )
+    @JsonManagedReference
+    private List<Product> products;
 
     public Category() {
     }
