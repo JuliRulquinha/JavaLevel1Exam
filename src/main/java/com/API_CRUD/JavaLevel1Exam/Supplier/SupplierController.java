@@ -1,7 +1,0 @@
-package com.API_CRUD.JavaLevel1Exam.Supplier;
-
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class SupplierController {
-}
