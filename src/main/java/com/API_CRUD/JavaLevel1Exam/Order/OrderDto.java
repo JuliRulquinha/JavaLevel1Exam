@@ -1,4 +1,11 @@
 package com.API_CRUD.JavaLevel1Exam.Order;
 
-public record OrderDto() {
+import com.API_CRUD.JavaLevel1Exam.Product.Product;
+
+import java.util.List;
+
+public record OrderDto(
+        Integer clientId,
+        List<Product>products
+) {
 }

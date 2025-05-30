@@ -1,5 +1,4 @@
-package com.API_CRUD.JavaLevel1Exam.Purchase;
-
+package com.API_CRUD.JavaLevel1Exam.Sale;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,11 +6,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Purchase {
+public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Integer orderId;
-    private Integer supplierId;
     private Integer clientId;
+    private Integer supplierId;
+    private Integer purchaseId;
 }
