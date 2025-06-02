@@ -20,8 +20,9 @@ public class CategoryService {
         return mapper.toCategoryDto(savedCategory);
     }
 
-    public List<Category> getAllCategories(){
-        return repository.findAll();
+    public List<CategoryDto> getAllCategories(){
+         var categoryList = repository.findAll();
+         return mapper.toCategoryDtoList(categoryList);
     }
 
     public CategoryDto getCategoryById(Integer id){
@@ -30,7 +31,16 @@ public class CategoryService {
                 .orElse(null);
     }
 
+    public CategoryDto updateCategoryById(Integer id, CategoryUpdateDto updateDto){
 
+        var categoryFromDb = repository.findById(id);
+        var category = categoryFromDb.map(mapper::toCategoryDto).map(mapper::toCategory).orElse(null);
+        if(category != null){
+            category.setName(updateDto.name());
+            repository.save(category);
+        }
+        return null;
+    }
 
     public void deleteCategoryById(Integer id){
         repository.deleteById(id);

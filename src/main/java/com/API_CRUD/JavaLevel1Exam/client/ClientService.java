@@ -20,8 +20,10 @@ public class ClientService {
         return dto;
     }
 
-    public List<Client> getAllClients(){
-        return repository.findAll();
+    public List<ClientDto> getAllClients(){
+
+        var clientList = repository.findAll();
+        return mapper.toClientDtoList(clientList);
     }
 
     public ClientResponseDto getClientById(Integer id){

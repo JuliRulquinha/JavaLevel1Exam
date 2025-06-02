@@ -22,8 +22,17 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public List<Category> getAll(){
+    public List<CategoryDto> getAll(){
         return categoryService.getAllCategories();
+    }
+
+    @PutMapping("/categories/{id}")
+    public CategoryDto updateById(
+            @PathVariable Integer id,
+            @RequestBody CategoryUpdateDto updateDto
+    ){
+        var dto = new CategoryUpdateDto(updateDto.name());
+        return categoryService.updateCategoryById(id, dto);
     }
 
     @DeleteMapping("/categories/{id}")

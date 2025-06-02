@@ -20,8 +20,10 @@ public class ProductService {
         return dto;
     }
     
-    public List<Product> getAllProducts(){
-        return repository.findAll();
+    public List<ProductDto> getAllProducts(){
+
+        var productsFromDb = repository.findAll();
+        return mapper.toProductDtoList(productsFromDb);
     }
 
     public ProductDto getProductById(Integer id){
