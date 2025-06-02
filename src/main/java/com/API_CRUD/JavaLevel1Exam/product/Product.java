@@ -3,7 +3,6 @@ package com.API_CRUD.JavaLevel1Exam.product;
 import com.API_CRUD.JavaLevel1Exam.category.Category;
 import com.API_CRUD.JavaLevel1Exam.supplier.Supplier;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

@@ -1,0 +1,167 @@
+Prova Teórica – Java + Spring Boot + PostgreSQL
+
+Responda as questões abaixo:
+                                        
+1️⃣ Java – Orientação a Objetos 
+Explique os conceitos de encapsulamento, herança e polimorfismo. Dê um exemplo simples de como cada um é usado em Java.
+
+Encapsulamento - Refere-se ao nível de acesso que uma propriedade ou classe tem, permitindo que ela exponha ou esconda o que bem entende.
+
+@Entity
+@Table(name = "products")
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    private String name;
+
+    @Column(name = "balance")
+    private BigDecimal price;
+    private int quantity;
+
+Neste exemplo a classe Product é publica mas suas propriedades são privadas. Tendo acesso somente através de getters and setters.
+
+
+Herança - Permite que uma classe herde as características e métodos de uma outra classe, tornando possível a reutilização do código.
+
+package com.API_CRUD.JavaLevel1Exam.product;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+}
+
+
+Polimorfismo - Permite que um objeto com os mesmos métodos tenha implementações diferentes ou sobrecargas, uma interface por exemplo, tem
+declarações de método e fica a critério de quem a extende, como essa lógica vai funcionar por dentro. Sobrecargas permitem que vc use um mesmo
+método com implementção diferente.
+
+ex:
+
+package com.juli.SpringCourse.student;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface StudentRepository extends JpaRepository<Student, Integer> {
+
+    List<Student> findAllByNameContaining(String param);
+}
+
+
+
+2️⃣ Spring Boot – Injeção de Dependência 
+O que é injeção de dependência no Spring e qual é a principal vantagem de utilizá-la? Mostre um exemplo básico de um serviço sendo injetado em um controller.
+
+A injeção de dependência serve para retirar a responsabilidade de uma classe de criar seus próprios recursos, ao invés disso ela recebe os recursos de fora.
+Nesse exemplo o ProductService injeta um repositório e um mapeador e fica responsável por criar os métodos utilizando os dois recursos, enquanto a classe controller
+injeta o serviço e sequer sabe da lógica por trás, ela só sabe que essa classe a oferece os métodos necessários para salvar o produto, tirando toda a responsabilidade
+do controller e deixando o código limpo e fácil de ler.
+
+ex:
+
+Service:
+
+package com.API_CRUD.JavaLevel1Exam.product;
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ProductService {
+    private final ProductRepository repository;
+    private final ProductMapper mapper;
+
+    public ProductService(ProductRepository repository, ProductMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
+
+    public ProductDto saveProduct(ProductDto dto){
+        var product = mapper.toProduct(dto);
+        repository.save(product);
+        return dto;
+    }
+
+Controller:
+
+package com.API_CRUD.JavaLevel1Exam.product;
+
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class ProductController {
+
+    private final ProductService productService;
+
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @PostMapping("/products")
+    public ProductDto save(
+            @RequestBody ProductDto dto
+    ){
+        return productService.saveProduct(dto);
+    }
+
+
+
+3️⃣ Spring Data JPA – Consultas 
+Explique a diferença entre os métodos findById, findAll e save no Spring Data JPA.
+ Descreva também o que acontece quando você executa repository.save().
+
+findById - Esse método retorna o objeto do tipo oferecido na implementação ao qual o
+id(do tipo também explicitado na implementação) seja igual ao valor passado como parametro
+ao método.
+
+findAll - Retorna todos os objetos da classe explicitada na implementação do repositório
+
+
+Neste exemplo abaixo o repositório retorna todos os objetos de Produto salvos na database:
+
+package com.API_CRUD.JavaLevel1Exam.product;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+}
+
+
+save - Salva na database o objeto oferecido. A entidade não pode ser nula.
+
+
+
+4️⃣ PostgreSQL – Relacionamentos
+Dado um relacionamento entre produto e categoria, onde um produto pertence a uma única categoria e uma categoria pode ter vários produtos:
+Como seria esse relacionamento no banco de dados PostgreSQL usando chave estrangeira?
+
+Em produto teriamos a annotation @ManyToOne que indicaria vários produtos para uma categoria. 
+
+@JoinColumn(
+           name = "category_id"
+    ) essa annotation indica a coluna que teria como referencia a categoria no banco de dados.
+ 
+@JsonBackReference
+    private Category category;
+Essa annotation indica que a referência vem da classe referenciada e deve ter o mesmo nome explicitado
+na propriedade "mappedBy" que fica na classe category entre parenteses na annotatio OneToMany 
+	@OneToMany(
+            mappedBy = "category"
+    ) 
+
+@JsonManagedReference
+    private List<Product> products;
+
+deve ser usada pela classe category, no banco de dados não haverá uma coluna products porém category terá uma lista de produtos,
+mas não haverá necessidade desta referência pois Produto já guardará a referência de category.
+
+
+
