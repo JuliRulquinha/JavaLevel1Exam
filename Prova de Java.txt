@@ -160,7 +160,7 @@ na propriedade "mappedBy" que fica na classe category entre parenteses na annota
 @JsonManagedReference
     private List<Product> products;
 
-deve ser usada pela classe category, no banco de dados não haverá uma coluna products porém category terá uma lista de produtos,
+Deve ser usada pela classe category, no banco de dados não haverá uma coluna products porém category terá uma lista de produtos,
 mas não haverá necessidade desta referência pois Produto já guardará a referência de category.
 
 
