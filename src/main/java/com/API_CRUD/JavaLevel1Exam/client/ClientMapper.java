@@ -16,6 +16,8 @@ public class ClientMapper {
         return client;
     }
 
+    public ClientDto toClientDto(Client client){ return new ClientDto(client.getName(), client.getEmail());}
+
     public ClientResponseDto toClientResponseDto(Client client){
         return new ClientResponseDto(client.getName());
     }

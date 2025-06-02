@@ -26,6 +26,14 @@ public class ClientController {
         return clientService.getAllClients();
     }
 
+    @PutMapping("/clients/{id}")
+    public ClientUpdateDto updateById(
+            @PathVariable Integer id,
+            @RequestBody ClientUpdateDto dto
+    ){
+        return clientService.updateClientById(id, dto);
+    }
+
     @DeleteMapping("/clients/{id}")
     public void deleteClientById(
             @PathVariable Integer id
