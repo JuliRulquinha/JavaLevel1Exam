@@ -2,6 +2,7 @@ package com.API_CRUD.JavaLevel1Exam.product;
 
 import com.API_CRUD.JavaLevel1Exam.category.Category;
 import com.API_CRUD.JavaLevel1Exam.category.CategoryDto;
+import com.API_CRUD.JavaLevel1Exam.supplier.Supplier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +15,14 @@ public class ProductMapper {
         product.setName(dto.name());
         product.setPrice(dto.price());
         product.setQuantity(dto.quantity());
-        var category = new Category();
-        category.setId(dto.categoryId());
 
+        var supplier = new Supplier();
+        var category = new Category();
+
+        category.setId(dto.categoryId());
+        supplier.setId(dto.supplierId());
+
+        product.setSupplier(supplier);
         product.setCategory(category);
 
         return product;
@@ -38,5 +44,9 @@ public class ProductMapper {
         }
 
         return productList;
+    }
+
+    public ProductUpdateDto toProductUpdateDto(Product product){
+        return new ProductUpdateDto(product.getName(), product.getPrice(), product.getQuantity());
     }
 }

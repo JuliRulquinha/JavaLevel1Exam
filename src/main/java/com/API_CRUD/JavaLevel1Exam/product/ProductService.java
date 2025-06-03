@@ -1,7 +1,9 @@
 package com.API_CRUD.JavaLevel1Exam.product;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.Port;
 import java.util.List;
 
 @Service
@@ -30,6 +32,17 @@ public class ProductService {
         return repository.findById(id)
                 .map(mapper::toProductDto)
                 .orElse(null);
+    }
+
+    public ProductUpdateDto updateProductById(Integer id, ProductUpdateDto updateDto){
+        var productFromDb = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+        productFromDb.setPrice(updateDto.price());
+        productFromDb.setQuantity(updateDto.quantity());
+        productFromDb.setName(updateDto.name());
+
+        var updatedProduct = repository.save(productFromDb);
+        return mapper.toProductUpdateDto(updatedProduct);
     }
 
     public void deleteProductById(Integer id){

@@ -27,6 +27,13 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @PatchMapping("/products/{id}")
+    public ProductUpdateDto updateProductById(
+            @PathVariable Integer id,
+            @RequestBody ProductUpdateDto dto){
+        return productService.updateProductById(id, dto);
+    }
+
     @DeleteMapping("/products/{id}")
     public void deleteProductById(
             @PathVariable Integer id

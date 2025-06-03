@@ -38,7 +38,7 @@ public class ClientService {
     public ClientUpdateDto updateClientById(Integer id, ClientUpdateDto updateDto){
 
         var client = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("client not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
 
         client.setName(updateDto.name());
         client.setEmail(updateDto.email());

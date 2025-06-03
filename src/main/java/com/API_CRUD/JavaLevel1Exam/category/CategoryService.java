@@ -2,6 +2,7 @@ package com.API_CRUD.JavaLevel1Exam.category;
 
 import java.util.List;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,13 +34,13 @@ public class CategoryService {
 
     public CategoryDto updateCategoryById(Integer id, CategoryUpdateDto updateDto){
 
-        var categoryFromDb = repository.findById(id);
-        var category = categoryFromDb.map(mapper::toCategoryDto).map(mapper::toCategory).orElse(null);
-        if(category != null){
-            category.setName(updateDto.name());
-            repository.save(category);
-        }
-        return null;
+        var categoryFromDb = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No category was found with the id: "+ id));
+
+        categoryFromDb.setName(updateDto.name());
+        var updatedCategory = repository.save(categoryFromDb);
+
+        return mapper.toCategoryDto(updatedCategory);
     }
 
     public void deleteCategoryById(Integer id){
