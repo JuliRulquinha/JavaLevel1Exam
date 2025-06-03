@@ -2,6 +2,7 @@ package com.API_CRUD.JavaLevel1Exam.client;
 
 import com.API_CRUD.JavaLevel1Exam.category.CategoryDto;
 import com.API_CRUD.JavaLevel1Exam.category.CategoryUpdateDto;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,14 +37,14 @@ public class ClientService {
 
     public ClientUpdateDto updateClientById(Integer id, ClientUpdateDto updateDto){
 
-        var ClientFromDb = repository.findById(id);
-        var Client = ClientFromDb.map(mapper::toClientDto).map(mapper::toClient).orElse(null);
-        if(Client != null){
-            Client.setName(updateDto.name());
-            Client.setEmail(updateDto.email());
-            repository.save(Client);
-        }
-        return null;
+        var client = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("client not found with id: " + id));
+
+        client.setName(updateDto.name());
+        client.setEmail(updateDto.email());
+
+        var updatedClient = repository.save(client);
+        return mapper.toClientUpdateDto(updatedClient);
     }
 
     public void deleteClientById(Integer id){

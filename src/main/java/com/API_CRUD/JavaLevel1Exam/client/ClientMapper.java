@@ -30,4 +30,8 @@ public class ClientMapper {
 
         return clientList;
     }
+
+    public ClientUpdateDto toClientUpdateDto(Client client){
+        return new ClientUpdateDto(client.getName(), client.getEmail());
+    }
 }

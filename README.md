@@ -3,22 +3,65 @@ Url to access the swagger page with the endpoints -> http://localhost:8080/swagg
 * Remember to create the database with the name "JavaLevel1Exam" before running the project or change the name in application.xml page, but make sure to have the database created beforehand, the name in the application.xml has to match the one in the database.
 * The username and password properties have to match your database username and password, don't forget to change it in the application.xml file.
 * To maintain the data inserted in the database even when stopping the application, set the ddl-auto property in the application.xml to update.
-* This application depends on postgreSql to work properly.
+  * This application depends on postgreSql to work properly.
 
-  // HERE'S SOME DATA TO INSERT USING THE CONTROLLER FOR FAST TESTING
+    // HERE'S SOME DATA TO INSERT USING THE CONTROLLER FOR FAST TESTING
 
-  CATEGORY : [ 
-    { "name": "Electronics" },
-    { "name": "Books" },
-    { "name": "Clothing" },
-    { "name": "Home & Kitchen" },
-    { "name": "Sports & Outdoors" },
-    { "name": "Toys & Games" },
-    { "name": "Beauty & Personal Care" },
-    { "name": "Automotive" },
-    { "name": "Health" },
-    { "name": "Groceries" }
-  ]
+    CATEGORY : [ 
+      { "name": "Electronics" },
+      { "name": "Books" },
+      { "name": "Clothing" },
+      { "name": "Home & Kitchen" },
+      { "name": "Sports & Outdoors" },
+      { "name": "Toys & Games" },
+      { "name": "Beauty & Personal Care" },
+      { "name": "Automotive" },
+      { "name": "Health" },
+      { "name": "Groceries" }
+    ]
+
+    SUPPLIER: [
+      {
+        "name": "Acme Supplies Co.",
+        "email": "contact@acmesupplies.com"
+      },
+      {
+        "name": "BrightSource Ltd.",
+        "email": "info@brightsource.co.uk"
+      },
+      {
+        "name": "Global Parts Inc.",
+        "email": "sales@globalpartsinc.com"
+      },
+      {
+        "name": "Everest Tools",
+        "email": "support@everesttools.com"
+      },
+      {
+        "name": "NovaTech Solutions",
+        "email": "hello@novatechsolutions.com"
+      },
+      {
+        "name": "Zenith Hardware",
+        "email": "orders@zenithhardware.com"
+      },
+      {
+        "name": "Prime Distributors",
+        "email": "team@primedistributors.com"
+      },
+      {
+        "name": "EcoMaterials Corp.",
+        "email": "service@ecomaterials.com"
+      },
+      {
+        "name": "Pinnacle Suppliers",
+        "email": "contact@pinnaclesuppliers.net"
+      },
+      {
+        "name": "Atlas Industrial",
+        "email": "sales@atlasindustrial.org"
+      }
+    ]
 
   
   PRODUCT : [
